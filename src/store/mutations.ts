@@ -1,9 +1,12 @@
 import { MutationTree } from 'vuex';
-import { RootState } from './types';
+import { RootState, Entry } from './types';
 
 const mutations: MutationTree<RootState> = {
-  setFiles(state: RootState, payload: File[]): void {
-    state.files = payload;
+  setEntries(state: RootState, payload: Entry[]): void {
+    state.entries = payload;
+  },
+  changeFileNames(state: RootState): void {
+    // empty
   },
 };
 
