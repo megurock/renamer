@@ -2,27 +2,33 @@
   header.app-header
     div
       button(
-        :disabled="!entries.length"
-        @click.prevent="$emit('excute')"
+        :disabled="!filePaths.length"
+        @click.prevent="$emit('execute')"
       ) 開始
-    .file-uploader フォルダを選択
-      input.file-uploader__input(type="file" webkitdirectory @change="onFileUpload")
+      button(
+        @click.prevent="onOpenButtonClick"
+      ) 開く
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { State } from 'vuex-class';
-import { Entry } from '../../store/types';
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import { State } from 'vuex-class'
+import { remote } from 'electron'
+
+const app: Electron.App = remote.app
+const dialog: Electron.Dialog = remote.dialog
 
 @Component
 export default class AppHeader extends Vue {
-  @State('entries') private readonly entries!: Entry[];
+  @State('filePaths') private readonly filePaths!: string[]
 
-  /**
-   *
-   */
-  private onFileUpload(event: Event): void {
-    console.log('e', (event.target as any).files);
+  private async onOpenButtonClick(event: MouseEvent): Promise<void> {
+    const result: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
+      properties: ['openFile', 'openDirectory', 'multiSelections'],
+    })
+    if (result.filePaths && result.filePaths.length) {
+      this.$store.dispatch('addFiles', result.filePaths)
+    }
   }
 }
 </script>

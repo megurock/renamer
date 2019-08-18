@@ -1,31 +1,60 @@
-import { ActionTree, ActionContext } from 'vuex';
-import { RootState, Entry } from './types';
-// import * as fs from 'fs'
-import path from 'path';
-import * as fs from 'fs-extra';
+import { ActionTree, ActionContext } from 'vuex'
+import { RootState } from './types'
+import path from 'path'
+import fs from 'fs'
 
-export const actions: ActionTree<RootState, RootState> = {
-  async changeFileNames(context: ActionContext<RootState, RootState>): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      console.log('changeFileNames');
-      const totalCount: number = context.state.entries.length;
-      const countDone: number = 0;
-      for (let i: number = 0; i < totalCount; i++) {
-        const entry: Entry = context.state.entries[i];
-        console.log('en?', entry.fullPath);
-        const directory: string = path.dirname(entry.fullPath);
-        const extension: string = path.extname(entry.fullPath);
-        const fileName: string = path.basename(entry.fullPath, extension);
-
-        console.log(directory, fileName, extension);
-        const newPath: string = `${directory}${fileName}_renamed${extension}`;
-        fs.renameSync(entry.fullPath, newPath);
-        console.log('done');
-        // fs.copy(entry.fullPath, `${entry.fullPath}`)
+/**
+ * retrieve all file paths in a file (directory)
+ */
+const traverseFile = (entryFilePath: string, onFileRead: (path: string) => any) => {
+  fs.readdir(entryFilePath, { withFileTypes: true }, (error: NodeJS.ErrnoException | null, dirents: fs.Dirent[]) => {
+    onFileRead(entryFilePath)
+    if (!error) {
+      for (const dirent of dirents) {
+        const direntPath: string = path.join(entryFilePath, dirent.name)
+        onFileRead(direntPath)
+        if (dirent.isDirectory()) {
+          traverseFile(direntPath, onFileRead)
+        }
       }
-      resolve('ok');
-    });
-  },
-};
+    }
+  })
+}
 
-export default actions;
+/**
+ *
+ */
+const addFiles = async (context: ActionContext<RootState, RootState>, filePaths: string[]): Promise<void> => {
+  for (let i: number = 0, len: number = filePaths.length; i < len; i++) {
+    const filePath: string = filePaths[i]
+    traverseFile(filePath, (fp: string) => {
+      context.commit('addFilePath', fp)
+    })
+  }
+}
+
+/**
+ *
+ */
+const changeFileNames = async (context: ActionContext<RootState, RootState>): Promise<void> => {
+  for (let i: number = 0, len: number = context.state.filePaths.length; i < len; i++) {
+    const filePath: string = context.state.filePaths[i]
+    const directoryPath: string = path.dirname(filePath)
+    const extension: string = path.extname(filePath)
+    const fileName: string = path.basename(filePath, extension)
+    const newPath: string = `${directoryPath}/${fileName}-copy${extension}`
+    fs.rename(filePath, newPath, (error) => {
+      if (error) {
+        console.error(error)
+      }
+    })
+  }
+}
+
+//
+export const actions: ActionTree<RootState, RootState> = {
+  addFiles,
+  changeFileNames,
+}
+
+export default actions

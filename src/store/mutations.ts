@@ -1,13 +1,13 @@
-import { MutationTree } from 'vuex';
-import { RootState, Entry } from './types';
+import { MutationTree } from 'vuex'
+import { RootState } from './types'
 
 const mutations: MutationTree<RootState> = {
-  setEntries(state: RootState, payload: Entry[]): void {
-    state.entries = payload;
+  addFilePath(state: RootState, payload: string): void {
+    state.filePaths.push(payload)
   },
   changeFileNames(state: RootState): void {
     // empty
   },
-};
+}
 
-export default mutations;
+export default mutations

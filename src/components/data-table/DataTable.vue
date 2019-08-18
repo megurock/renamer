@@ -5,16 +5,15 @@
       li(
         v-for="(item, index) in data" 
         :key="index"
-      ) {{item.fullPath}}
+      ) {{item}}
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Entry } from '../../store/types';
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class DataTable extends Vue {
-  @Prop({ required: true, default: []}) protected data!: Entry[];
+  @Prop({ required: true, default: () => []}) protected data!: string[]
 }
 </script>
 

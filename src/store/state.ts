@@ -1,8 +1,8 @@
-import { RootState } from './types';
+import { RootState } from './types'
 
 const state: RootState = {
   version: '0.0.1',
-  entries: [],
-};
+  filePaths: [],
+}
 
-export default state;
+export default state
