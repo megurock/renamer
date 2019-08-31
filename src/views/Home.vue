@@ -5,7 +5,7 @@
       @execute="onExcuteButonClick"
     )
     drop-area
-    data-table(:data="filePaths")
+    data-table(:files="files")
 </template>
 
 <script lang="ts">
@@ -15,7 +15,7 @@ import AppHeader from '@/components/app-header/AppHeader.vue'
 import DataTable from '@/components/data-table/DataTable.vue'
 import DropArea from '@/components/drop-area/DropArea.vue'
 import { actions } from '@/store/actions'
-
+import { File } from '@/store/types'
 
 @Component({
   components: {
@@ -26,7 +26,7 @@ import { actions } from '@/store/actions'
 })
 export default class Home extends Vue {
 
-  @State('filePaths') private readonly filePaths!: string[]
+  @State('files') private readonly files!: File[]
 
   /**
    *
