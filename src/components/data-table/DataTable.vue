@@ -3,17 +3,18 @@
     h2 Data table
     ul
       li(
-        v-for="(item, index) in data" 
+        v-for="(file, index) in files" 
         :key="index"
-      ) {{item}}
+      ) {{file.path}}
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { File } from '@/store/types'
 
 @Component
 export default class DataTable extends Vue {
-  @Prop({ required: true, default: () => []}) protected data!: string[]
+  @Prop({ required: true, default: () => []}) protected files!: File[]
 }
 </script>
 

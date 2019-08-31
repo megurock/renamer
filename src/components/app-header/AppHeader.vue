@@ -2,7 +2,7 @@
   header.app-header
     div
       button(
-        :disabled="!filePaths.length"
+        :disabled="!files.length"
         @click.prevent="$emit('execute')"
       ) 開始
       button(
@@ -20,7 +20,7 @@ const dialog: Electron.Dialog = remote.dialog
 
 @Component
 export default class AppHeader extends Vue {
-  @State('filePaths') private readonly filePaths!: string[]
+  @State('files') private readonly files!: string[]
 
   private async onOpenButtonClick(event: MouseEvent): Promise<void> {
     const result: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
