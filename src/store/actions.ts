@@ -45,14 +45,14 @@ const readFileAsync = async (filePath: string, onFileRead: (filePath: File) => a
  *
  */
 const addFiles = async (context: ActionContext<RootState, RootState>, filePaths: string[]): Promise<void> => {
-  console.time('start')
+  console.time('total read time')
   const files: File[] = []
   await Promise.all(
     filePaths.map((filePath: string): Promise<void> => readFileAsync(filePath, (file: File) => {
       files.push(file)
     })))
   context.commit('addFile', files)
-  console.timeEnd('start')
+  console.timeEnd('total read time')
 }
 
 /**

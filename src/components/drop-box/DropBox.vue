@@ -1,20 +1,26 @@
 <template lang="pug">
-  .drop-area(
-    @dragover.prevent.stop=""
-    @drop.prevent.stop="onDrop"
-  )
+  .drop-box(
+      @dragover.prevent.stop=""
+      @drop.prevent.stop="onDrop"
+    )
+    slot
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { remote } from 'electron'
+
+const app: Electron.App = remote.app
+const dialog: Electron.Dialog = remote.dialog
 
 @Component
-export default class DropArea extends Vue {
+export default class DropBox extends Vue {
 
   /**
    *
    */
   protected onDrop(event: DragEvent): void {
+    console.log('onDrop')
     if (event.dataTransfer) {
       const filePaths: string[] = []
       for (let i: number = 0, len: number = event.dataTransfer.files.length; i < len; i++) {
@@ -29,9 +35,11 @@ export default class DropArea extends Vue {
 </script>
 
 <style scoped lang="scss">
-.drop-area {
+.drop-box {
   width: 100%;
   height: 200px;
   border: 5px solid #333;
+  box-sizing: border-box;
+  background-color: #fff;
 }
 </style>

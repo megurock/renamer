@@ -6,12 +6,20 @@
     router-view
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
+#app {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 32px 1fr;
+  grid-template-areas: 
+    "nav"
+    "app"
+}
+
 #nav {
+  grid-area: nav;
   text-align: center;
-  padding: 30px;
   a {
-    font-weight: bold;
     color: #2c3e50;
     &.router-link-exact-active {
       color: #42b983;

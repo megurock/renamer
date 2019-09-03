@@ -4,27 +4,33 @@
       @fileUpload="onFileUpload"
       @execute="onExcuteButonClick"
     )
-    drop-area
-    data-table(:files="files")
+    action-selector
+    action-pane
+    file-list(:files="files")
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Action, State } from 'vuex-class'
+import ActionPane from '@/components/action-pane/ActionPane.vue'
+import ActionSelector from '@/components/action-selector/ActionSelector.vue'
 import AppHeader from '@/components/app-header/AppHeader.vue'
-import DataTable from '@/components/data-table/DataTable.vue'
-import DropArea from '@/components/drop-area/DropArea.vue'
+import FileList from '@/components/flile-list/FileList.vue'
 import { actions } from '@/store/actions'
 import { File } from '@/store/types'
 
+
 @Component({
   components: {
+    ActionPane,
+    ActionSelector,
     AppHeader,
-    DataTable,
-    DropArea,
+    FileList,
   },
 })
 export default class Home extends Vue {
+
+
 
   @State('files') private readonly files!: File[]
 
@@ -44,3 +50,35 @@ export default class Home extends Vue {
 
 }
 </script>
+
+<style lang="scss">
+.home { 
+  display: grid; 
+  grid-template-columns: auto 1fr;
+  grid-template-rows: max-content max-content 1fr;
+  grid-template-areas: 
+    "header header"
+    "action-selector action-pane"
+    "file-list file-list" 
+}
+
+.app-header {
+  grid-area: header;
+  background-color: lightblue;
+}
+
+.action-selector {
+  grid-area: action-selector;
+  background-color: lightyellow;
+}
+
+.action-pane {
+  grid-area: action-pane;
+  background-color: lightgreen;
+}
+
+.file-list {
+  grid-area: file-list;
+  background: lightpink;
+}
+</style>

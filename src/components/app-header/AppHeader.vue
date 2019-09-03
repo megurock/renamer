@@ -1,35 +1,22 @@
 <template lang="pug">
   header.app-header
     div
+      h2 AppHeader
       button(
         :disabled="!files.length"
         @click.prevent="$emit('execute')"
       ) 開始
-      button(
-        @click.prevent="onOpenButtonClick"
-      ) 開く
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { State } from 'vuex-class'
-import { remote } from 'electron'
-
-const app: Electron.App = remote.app
-const dialog: Electron.Dialog = remote.dialog
 
 @Component
 export default class AppHeader extends Vue {
   @State('files') private readonly files!: string[]
 
-  private async onOpenButtonClick(event: MouseEvent): Promise<void> {
-    const result: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
-      properties: ['openFile', 'openDirectory', 'multiSelections'],
-    })
-    if (result.filePaths && result.filePaths.length) {
-      this.$store.dispatch('addFiles', result.filePaths)
-    }
-  }
+
 }
 </script>
 
