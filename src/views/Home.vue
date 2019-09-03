@@ -11,14 +11,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Action, State } from 'vuex-class'
+import { Action, State, Getter } from 'vuex-class'
 import ActionPane from '@/components/action-pane/ActionPane.vue'
 import ActionSelector from '@/components/action-selector/ActionSelector.vue'
 import AppHeader from '@/components/app-header/AppHeader.vue'
 import FileList from '@/components/flile-list/FileList.vue'
-import { actions } from '@/store/actions'
-import { File } from '@/store/types'
-
+import { File } from '@/store/modules/files/types'
+import { RootState } from '../store/types'
+import Files from '@/store/modules/files'
 
 @Component({
   components: {
@@ -30,9 +30,7 @@ import { File } from '@/store/types'
 })
 export default class Home extends Vue {
 
-
-
-  @State('files') private readonly files!: File[]
+  @State((state) => state.files.list) private readonly files!: File[]
 
   /**
    *

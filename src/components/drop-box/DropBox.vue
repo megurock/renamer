@@ -9,6 +9,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { remote } from 'electron'
+import { getModule } from 'vuex-module-decorators'
+import Files from '@/store/modules/files'
 
 const app: Electron.App = remote.app
 const dialog: Electron.Dialog = remote.dialog
@@ -27,7 +29,9 @@ export default class DropBox extends Vue {
         const file: File = event.dataTransfer.files[i]
         filePaths[i] = file.path
       }
-      this.$store.dispatch('addFiles', filePaths)
+      // this.$store.dispatch('addFiles', filePaths)
+      Files.addFiles(filePaths)
+      console.log('ok!')
     }
   }
 

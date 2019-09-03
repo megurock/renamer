@@ -12,6 +12,8 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { remote } from 'electron'
 import DropBox from '@/components/drop-box/DropBox.vue'
+import { getModule } from 'vuex-module-decorators'
+import Files from '@/store/modules/files'
 
 const app: Electron.App = remote.app
 const dialog: Electron.Dialog = remote.dialog
@@ -28,7 +30,8 @@ export default class FileSelector extends Vue {
       properties: ['openFile', 'openDirectory', 'multiSelections'],
     })
     if (result.filePaths && result.filePaths.length) {
-      this.$store.dispatch('addFiles', result.filePaths)
+      // this.$store.dispatch('addFiles', result.filePaths)
+      Files.addFiles(result.filePaths)
     }
   }
 

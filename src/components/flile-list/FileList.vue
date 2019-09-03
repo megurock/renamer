@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { File } from '@/store/types'
+import { File } from '@/store/modules/files/types'
 
 @Component
 export default class FileList extends Vue {

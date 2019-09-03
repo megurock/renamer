@@ -6,7 +6,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { File } from '@/store/types'
 import FileSelector from '@/components/file-selector/FileSelector.vue'
 
 @Component({ components: {
