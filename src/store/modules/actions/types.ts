@@ -2,10 +2,14 @@ export interface ActionState {
   files: File[]
 }
 
-export type ActionType = 'filter' | 'rename'
+export enum ActionType {
+  filter = 'filter',
+  rename = 'rename',
+}
 
 export interface Action {
-  name: string
-  type: ActionType
-  description: string
+  readonly id: string,
+  readonly name: string
+  readonly type: ActionType
+  readonly description: string
 }

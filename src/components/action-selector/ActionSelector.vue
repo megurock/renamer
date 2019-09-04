@@ -2,22 +2,35 @@
   .action-selector
     dl.action-list
       dt category
-      dd フィルタ
-      dd リネーム
-      dd 属性変更
+      dd(
+        v-for="(type, index) in actionTypeList" 
+        :key="index"
+        @click="changeActionType(type)"
+      ) {{type}}
     dl.action-list
       dt action
-      dd 連番付きファイル名に変更
-      dd ファイル名に連番を追加
-      dd 拡張子の追加・置換
+      dd(
+        v-for="(action, index) in selectedActionList" 
+        :key="index"
+      ) {{action.name}}
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { File } from '@/store/modules/files/types'
+import Actions from '@/store/modules/actions/'
+import { Action, ActionType } from '@/store/modules/actions/types'
+import { log } from 'util'
 
 @Component
 export default class ActionSelector extends Vue {
+
+  private get actionTypeList(): string[] { return Actions.actionTypeList }
+  private get selectedActionList(): Action[] { return Actions.selectedActionList }
+
+  private changeActionType(type: ActionType): void {
+    Actions.setActionType(type)
+  }
 
 }
 </script>

@@ -6,12 +6,11 @@
     )
     action-selector
     action-pane
-    file-list(:files="files")
+    file-list(:files="list")
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Action, State, Getter } from 'vuex-class'
 import ActionPane from '@/components/action-pane/ActionPane.vue'
 import ActionSelector from '@/components/action-selector/ActionSelector.vue'
 import AppHeader from '@/components/app-header/AppHeader.vue'
@@ -30,7 +29,7 @@ import Files from '@/store/modules/files'
 })
 export default class Home extends Vue {
 
-  @State((state) => state.files.list) private readonly files!: File[]
+  private get list(): File[] { return Files.list }
 
   /**
    *

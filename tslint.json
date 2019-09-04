@@ -17,6 +17,7 @@
     "no-console": false,
     "quotemark": [true, "single"],
     "semicolon": [true, "never"],
-    "importHelpers": true
+    "importHelpers": true,
+    "variable-name": [true, "allow-leading-underscore"]
   }
 }
