@@ -31,11 +31,50 @@ class Actions extends VuexModule {
       type: ActionType.rename,
     },
   ]
-  private selectedActionType: ActionType = ActionType.filter
 
+  private _selectedActionType: ActionType = ActionType.filter
+  public get selectedActionType(): ActionType { return this._selectedActionType }
+
+  private _selectedActionList: ActionItem[] = []
+  public get selectedActionList(): ActionItem[] { return this._selectedActionList }
+
+  /**
+   *
+   */
   @Mutation
   public setActionType(type: ActionType): void {
-    this.selectedActionType = type
+    this._selectedActionType = type
+  }
+
+  /**
+   *
+   */
+  @Mutation
+  public addAction(action: ActionItem, index?: number): ActionItem[] {
+    if (index) {
+      this._selectedActionList.splice(index, 0, action)
+    } else {
+      this._selectedActionList.push(action)
+    }
+    return this._selectedActionList
+  }
+
+  /**
+   *
+   */
+  @Mutation
+  public removeAction(index: number): ActionItem[] {
+    this._selectedActionList.splice(index, 1)
+    return this._selectedActionList
+  }
+
+  /**
+   *
+   */
+  @Mutation
+  public removeAllActions(): ActionItem[] {
+    this._selectedActionList = []
+    return this._selectedActionList
   }
 
   /**
@@ -48,8 +87,8 @@ class Actions extends VuexModule {
   /**
    *
    */
-  public get selectedActionList(): ActionItem[] {
-    return this.list.filter((action: ActionItem) => action.type === this.selectedActionType)
+  public get filteredActionList(): ActionItem[] {
+    return this.list.filter((action: ActionItem) => action.type === this._selectedActionType)
   }
 
 }

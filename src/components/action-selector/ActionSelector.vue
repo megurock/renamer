@@ -10,8 +10,9 @@
     dl.action-list
       dt action
       dd(
-        v-for="(action, index) in selectedActionList" 
+        v-for="(action, index) in filteredActionList" 
         :key="index"
+        @dblclick="addAction(action)"
       ) {{action.name}}
 </template>
 
@@ -26,10 +27,14 @@ import { log } from 'util'
 export default class ActionSelector extends Vue {
 
   private get actionTypeList(): string[] { return Actions.actionTypeList }
-  private get selectedActionList(): Action[] { return Actions.selectedActionList }
+  private get filteredActionList(): Action[] { return Actions.filteredActionList }
 
   private changeActionType(type: ActionType): void {
     Actions.setActionType(type)
+  }
+
+  private addAction(action: Action): void {
+    Actions.addAction(action)
   }
 
 }
