@@ -10,7 +10,7 @@ class Files extends VuexModule {
   public get list(): File[] { return this._list }
 
   @Action({ rawError: true })
-  public async addFiles(filePaths: string[]): Promise<void> {
+  public async addFilesAsync(filePaths: string[]): Promise<void> {
     console.time('total read time')
     const files: File[] = []
     await Promise.all(filePaths.map((filePath: string): Promise<void> =>
@@ -18,13 +18,26 @@ class Files extends VuexModule {
         files.push(file)
       }),
     ))
-    this.addFile(files)
+    console.log('total number of files', files.length)
+    this.addFiles(files)
     console.timeEnd('total read time')
   }
 
   @Mutation
-  private addFile(files: File | File[]): void {
-    this._list.push(...Array.isArray(files) ? files : [files])
+  private addFiles(files: File[]): void {
+    // this may cause a range error (Maximu call stack size exceeded.)
+    // try {
+    //   this._list.push(...files)
+    // } catch (error) {
+    //   console.warn('error!', error)
+    // }
+    files.forEach((file: File) => {
+      try {
+        this._list.push(file)
+      } catch (error) {
+        console.warn(error)
+      }
+    })
   }
 
 }

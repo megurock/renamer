@@ -22,16 +22,13 @@ export default class DropBox extends Vue {
    *
    */
   protected onDrop(event: DragEvent): void {
-    console.log('onDrop')
     if (event.dataTransfer) {
       const filePaths: string[] = []
       for (let i: number = 0, len: number = event.dataTransfer.files.length; i < len; i++) {
         const file: File = event.dataTransfer.files[i]
         filePaths[i] = file.path
       }
-      // this.$store.dispatch('addFiles', filePaths)
-      Files.addFiles(filePaths)
-      console.log('ok!')
+      Files.addFilesAsync(filePaths)
     }
   }
 

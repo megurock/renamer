@@ -27,12 +27,16 @@ const retrieveFilePathAsync = async (filePath: string, onFileRead: (filePath: Fi
     for (const dirent of dirents) {
       const direntPath: string = path.join(filePath, dirent.name)
       const isDirectory: boolean = dirent.isDirectory()
-      if (isDirectory) { directoryPaths.push(direntPath) }
+      if (isDirectory) {
+        directoryPaths.push(direntPath)
+        // await retrieveFilePathAsync(direntPath, onFileRead)
+      }
       onFileRead({ isFile: !isDirectory, isDirectory, path: direntPath })
     }
     if (directoryPaths.length) {
       await Promise.all(
-        directoryPaths.map((directoryPath: string): Promise<void> => retrieveFilePathAsync(directoryPath, onFileRead)))
+        directoryPaths.map((directoryPath: string): Promise<void> => retrieveFilePathAsync(directoryPath, onFileRead)),
+      )
     }
   } catch (error) {
     onFileRead({ isFile: true, isDirectory: false, path: filePath })

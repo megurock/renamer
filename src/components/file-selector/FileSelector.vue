@@ -31,7 +31,7 @@ export default class FileSelector extends Vue {
     })
     if (result.filePaths && result.filePaths.length) {
       // this.$store.dispatch('addFiles', result.filePaths)
-      Files.addFiles(result.filePaths)
+      Files.addFilesAsync(result.filePaths)
     }
   }
 
