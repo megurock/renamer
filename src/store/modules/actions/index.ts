@@ -38,6 +38,9 @@ class Actions extends VuexModule {
   private _selectedActionList: ActionItem[] = []
   public get selectedActionList(): ActionItem[] { return this._selectedActionList }
 
+  private _selectedAction?: ActionItem = undefined
+  public get selectedAction(): ActionItem | undefined { return this._selectedAction }
+
   /**
    *
    */
@@ -75,6 +78,15 @@ class Actions extends VuexModule {
   public removeAllActions(): ActionItem[] {
     this._selectedActionList = []
     return this._selectedActionList
+  }
+
+  /**
+   *
+   */
+  @Mutation
+  public setAction(action: ActionItem): void {
+    this._selectedAction = action
+    console.log('ac', this._selectedAction.name, this._selectedAction.description)
   }
 
   /**

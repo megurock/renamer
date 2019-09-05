@@ -1,19 +1,24 @@
 <template lang="pug">
   .action-selector
-    dl.action-list
+    dl#action-category-list.action-list
       dt category
       dd(
         v-for="(type, index) in actionTypeList" 
         :key="index"
-        @click="changeActionType(type)"
+        @click="setActionType(type)"
       ) {{type}}
-    dl.action-list
+    dl#action-list.action-list
       dt action
       dd(
         v-for="(action, index) in filteredActionList" 
         :key="index"
+        @click="setAction(action)"
         @dblclick="addAction(action)"
       ) {{action.name}}
+    #action-descriptor.action-descriptor
+      dl(v-if="selectedAction")
+        dt {{selectedAction.name}}
+        dd {{selectedAction.description}}
 </template>
 
 <script lang="ts">
@@ -28,11 +33,25 @@ export default class ActionSelector extends Vue {
 
   private get actionTypeList(): string[] { return Actions.actionTypeList }
   private get filteredActionList(): Action[] { return Actions.filteredActionList }
+  private get selectedAction(): Action | undefined { return Actions.selectedAction }
 
-  private changeActionType(type: ActionType): void {
+  /**
+   *
+   */
+  private setActionType(type: ActionType): void {
     Actions.setActionType(type)
   }
 
+  /**
+   *
+   */
+  private setAction(action: Action): void {
+    Actions.setAction(action)
+  }
+
+  /**
+   *
+   */
   private addAction(action: Action): void {
     Actions.addAction(action)
   }
@@ -44,7 +63,14 @@ export default class ActionSelector extends Vue {
 .action-selector {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: min-content 1fr; 
+  grid-template-areas: 
+    "action-category-list action-list"
+    "action-descriptor    action-descriptor"
 }
+#action-category-list { grid-area: action-category-list; }
+#action-list { grid-area: action-list; }
+#action-descriptor { grid-area: action-descriptor; }
 
 .action-list {
   list-style-type: none;
@@ -55,4 +81,12 @@ export default class ActionSelector extends Vue {
     margin: 0;
   }
 }
+
+.action-descriptor {
+  dd {
+    margin: 0;
+  }
+}
+
+
 </style>

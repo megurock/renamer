@@ -51,7 +51,7 @@ export default class Home extends Vue {
 <style lang="scss">
 .home { 
   display: grid; 
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: max-content max-content 1fr;
   grid-template-areas: 
     "header header"
