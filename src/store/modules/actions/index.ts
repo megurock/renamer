@@ -86,7 +86,6 @@ class Actions extends VuexModule {
   @Mutation
   public setAction(action: ActionItem): void {
     this._selectedAction = action
-    console.log('ac', this._selectedAction.name, this._selectedAction.description)
   }
 
   /**

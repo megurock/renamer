@@ -48,7 +48,7 @@ export default class Home extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .home { 
   display: grid; 
   grid-template-columns: 1fr 1fr;
