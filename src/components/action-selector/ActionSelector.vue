@@ -26,7 +26,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { File } from '@/store/modules/files/types'
 import Actions from '@/store/modules/actions/'
 import { Action, ActionType } from '@/store/modules/actions/types'
-import { log } from 'util'
 
 @Component
 export default class ActionSelector extends Vue {
@@ -79,12 +78,14 @@ export default class ActionSelector extends Vue {
   }
   dd {
     margin: 0;
+    cursor: pointer;
   }
 }
 
 .action-descriptor {
   dd {
     margin: 0;
+    cursor: pointer;
   }
 }
 

@@ -7,25 +7,25 @@ class Actions extends VuexModule {
 
   private list: ActionItem[] = [
     {
-      id: 'F-001',
+      id: 'F001',
       name: 'ファイル/フォルダ/両方',
       description: 'アクションの対象を、ファイルだけ、フォルダだけ、または両方か、選択します。',
       type: ActionType.filter,
     },
     {
-      id: 'F-002',
+      id: 'F002',
       name: '拡張子によるフィルタ',
       description: 'ファイルを拡張子でフィルタリングします。',
       type: ActionType.filter,
     },
     {
-      id: 'R-001',
+      id: 'R001',
       name: '連番付きファイル名に変更',
       description: 'ファイルを連番付きの名前に変更します。',
       type: ActionType.rename,
     },
     {
-      id: 'R-002',
+      id: 'R002',
       name: 'ファイル名に連番を追加',
       description: 'ファイル名の最初、あるいは最後に連番を追加します。',
       type: ActionType.rename,

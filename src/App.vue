@@ -9,7 +9,7 @@
 <style scoped lang="scss">
 #app {
   display: grid;
-  height: 100vh;
+  min-height: 100vh;
   grid-template-rows: 32px 1fr;
   grid-template-areas: 
     "nav"
